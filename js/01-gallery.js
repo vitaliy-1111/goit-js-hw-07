@@ -1,8 +1,6 @@
 import { galleryItems } from './gallery-items.js';
 // Change code below this line
 
-console.log(galleryItems);
-
 const instance = basicLightbox.create(`
     <img src="" width="800" height="600">
 `)
@@ -16,30 +14,24 @@ refs.gallery.addEventListener('click', onImageClick)
 
 function onImageClick(event) {
   event.preventDefault();
-  const isGalleryImage = event.target.classList.contains('gallery__image');
-  if (!isGalleryImage) {
+  const isClickOnGalleryImage = event.target.classList.contains('gallery__image');
+  if (!isClickOnGalleryImage) {
     return;
   }
-  console.log('target', event.target);
-  console.log('target-current', event.currentTarget);
   refs.image.src = event.target.dataset.source;
   instance.show();
 
-  document.addEventListener('keydown', onPressKeyEsc);
- 
-
+  document.addEventListener('keydown', onPressEscCloseModal);
 }
 
-function onPressKeyEsc(event) {
-  console.log('event.key', event.key)
+function onPressEscCloseModal(event) {
   if (event.key === 'Escape') {
     instance.close();
-    document.removeEventListener('keydown', onPressKeyEsc);
+    document.removeEventListener('keydown', onPressEscCloseModal);
   }
 }
 
 const galleryMarkup = createGalleryMarkup(galleryItems);
-console.log(galleryMarkup);
 
 function createGalleryMarkup(galleryItems) {
   return galleryItems.map(item => {
